@@ -1,0 +1,662 @@
+\documentclass[aps,prd,showpacs,preprintnumbers,twocolumn]{revtex4}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{color}
+%\usepackage[dvipdfm]{graphicx}
+%\usepackage{bmpsize}
+\usepackage{amsmath}
+%\usepackage{subfigure}
+%\usepackage{pdfsync}
+\usepackage{epsf,amssymb,amsfonts,amsmath}
+\def\p{\partial}
+\def\a{\alpha}
+\def\be{\begin{equation}}
+\def\ee{\end{equation}}
+\def\bea{\begin{eqnarray}}
+\def\eea{\end{eqnarray}}
+\def\del          {\partial}
+\def\delbar       {\bar\partial}
+\def\ii           {{\rm i}}
+\def\chain        {{\circ}}
+\def\tr           {\mathop{\rm Tr}}
+\def\Re           {{\rm Re\hskip0.1em}}
+\def\Im           {{\rm Im\hskip0.1em}}
+\def\id           {{\it id}}
+\def\lag{\langle}
+\def\rag{\rangle}
+
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\beqa}{\begin{eqnarray}}
+\newcommand{\eeqa}{\end{eqnarray}}
+\newcommand{\beqar}{\begin{eqnarray*}}
+\newcommand{\eeqar}{\end{eqnarray*}}
+\newcommand{\labell}[1]{\label{#1}}
+\newcommand{\labels}[1]{\label{#1}}
+\newcommand{\reef}[1]{(\ref{#1})}
+\renewcommand{\eqref}[1]{(\ref{#1})}
+\newcommand{\ssc}{\scriptscriptstyle}
+\newcommand{\eg}{{\it e.g.,}\ }
+\newcommand{\ie}{{\it i.e.,}\ }
+\newcommand{\mt}[1]{\textrm{\tiny #1}}
+\newcommand{\tL}{{\tilde L}}
+\newcommand{\hL}{{\hat L}}
+\newcommand{\tal}{{\tilde\alpha}}
+\newcommand{\ls}{\ell_s}
+\newcommand{\gs}{g_s}
+\newcommand{\lp}{\ell_{\mt P}}
+\newcommand{\vareps}{\varepsilon}
+\newcommand{\nc}{N_c}
+\newcommand{\x}{\bm{x}}
+\newcommand{\ka}{\bm{k}}
+\def\a{\alpha}
+\def\w{\omega}
+\def\g{\gamma}
+\def\hh{\hat{h}}
+\newcommand{\kk}{\mathfrak{k}}
+\def\hs{\hat{s}}
+\def\hc{\hat{c}}
+\def\om{\Omega}
+\def\tg{\tilde{g}}
+\def\t{\tau}
+\def\p{\varphi}
+\def\pp{\phi}
+\def\r{\rho}
+\def\dilog{{\rm dilog}}
+\def\hw{\hat{\mathfrak{w}}}
+\def\hq{\hat{\mathfrak{q}}}
+\def\dd{{\delta}}
+\def\l{\lambda}
+\def\lgb{\lambda_{GB}}
+\def\ra{\Rightarrow}
+\def\c{\chi}
+\def\k{\kappa}
+\def\e{\cale}
+\def\ta{\tilde{a}}
+\def\ha{\hat{a}}
+\def\z{\zeta}
+\def\Red            {\special{color cmyk 0  1  1  0           }}
+\catcode`\@=12
+\def\cala         {{\cal A}}
+\def\calA         {{\mathfrak A}}
+\def\calAbar      {{\underline \calA}}
+\def\calb         {{\cal B}}
+\def\calc         {{\cal C}}
+\def\cald         {{\cal D}}
+\def\cale         {{\cal E}}
+\def\calf         {{\cal F}}
+\def\calg         {{\cal G}}
+\def\calG         {{\mathfrak G}}
+\def\calh         {{\cal H}}
+\def\cali         {{\cal I}}
+\def\calj         {{\cal J}}
+\def\calk         {{\cal K}}
+\def\call         {{\cal L}}
+\def\calm         {{\cal M}}
+\def\caln         {{\cal N}}
+\def\calo         {{\cal O}}
+\def\calp         {{\cal P}}
+\def\calq         {{\cal Q}}
+\def\calr         {{\cal R}}
+\def\cals         {{\cal S}}
+\def\calt         {{\cal T}}
+\def\calu         {{\cal U}}
+\def\calv         {{\cal V}}
+\def\calw         {{\cal W}}
+\def\calz         {{\cal Z}}
+
+\def\m{\mu}
+\def\n{\nu}
+\def\a{\alpha}
+\def\b{\beta}
+\def\r{\rho}
+\def\s{\sigma}
+\def\o{\omega}
+\def\t{\tau}
+\def\th{\theta}
+\def\d{\delta}
+\def\e{\epsilon}
+\def\c{\cdot}
+\def\p{\partial}
+\def\eq{\equiv}
+\def\qd{\qquad}
+\def\lag{\langle}
+\def\rag{\rangle}
+\def\nr{\nonumber\\}
+\def\nn{\nonumber}
+\newcommand\mr{\mathscr}
+\newcommand\ml{\mathcal}
+\newcommand\mb{\mathbb}
+\newcommand\mf{\mathbf}
+
+\begin{document}
+
+\title{Realization of chiral symmetry breaking and restoration in holographic QCD}
+\author{Kaddour Chelabi $^{a,b,c}$}
+\author{Zhen Fang$^{a,b}$}
+\author{Mei Huang$^{d,e}$}
+\author{Danning Li$^{a}$}
+\author{Yue-Liang Wu$^{a,b}$}
+\affiliation{$^{a}$ State Key Laboratory of Theoretical Physics,
+Institute of Theoretical Physics, Chinese Academy of Sciences,
+Beijing 100190, P. R. China }
+\affiliation{$^{b}$ University of Chinese Academy of Sciences (UCAS), P.R. China}
+\affiliation{$^{c}$ Laboratory of Particle Physics and Statistical Physics, Ecole Normale Superieure-Kouba. B.P. 92,16050, Vieux-Kouba, Algiers, Algeria}
+\affiliation{$^{d}$Institute of High
+Energy Physics, Chinese Academy of Sciences, Beijing 100049, P.R. China}
+\affiliation{$^{e}$Theoretical Physics Center for Science
+Facilities, Chinese Academy of Sciences, Beijing 100049, P.R. China}
+
+\begin{abstract}
+With proper profiles of the scalar potential and the dilaton field,  for the first time, the spontaneous chiral symmetry breaking
+in the vacuum and its restoration at finite temperature are correctly realized in the holographic QCD framework.
+In the chiral limit, a nonzero chiral condensate develops in the vacuum and decreases with temperature, and the phase transition
+is of 2nd order for two-flavor case and of 1st order for three-flavor case. In the case of explicit chiral symmetry breaking,
+in two-flavor case, the 2nd order phase transition turns to crossover with any nonzero current quark mass, and in three-flavor case,
+the 1st order phase transition turns to crossover at a finite current quark mass. The correct description of chiral symmetry breaking
+and restoration makes the holographic QCD models more powerful in dealing with non-perturbative QCD phenomena.
+This framework can be regarded as a general set up in application of AdS/CFT to describe conventional Ginzburg-Landau-Wilson
+type phase transitions, e.g. in condensed matter and cosmology systems.
+\end{abstract}
+\pacs{13.40.-f, 25.75.-q, 11.10.Wx }
+\maketitle
+
+{\it Introduction:} The spontaneous chiral symmetry breaking and the color charge confinement are two most intriguing
+non-perturbative aspects of
+Quantum Chromodynamics (QCD). It is widely believed that chiral symmetry can be restored and color degrees of freedom can
+be freed at high temperature and/or density. The interplay between chiral and deconfinement phase transitions are of continuous interests for
+studying the QCD phase diagram, which is always the most important topic of high energy nuclear physics. The deconfined quark-gluon matter
+might be formed during the evolution of the early universe at high temperature, and could exist in the core of compact stars at high baryon
+density, respectively. In laboratory, ultrarelativistic heavy ion collisions (HIC) at the Relativistic Heavy Ion collider (RHIC) and the Large
+Hadron Collider (LHC) provide a unique controllable experimental tool to investigate QCD phase transitions and properties of quark matter
+at high temperature and small baryon density, while future facilities at FAIR and NICA will focus on exploring QCD phase structures at finite
+baryon density.
+
+The chiral symmetry breaking and restoration is well defined in the chiral limit when the current quark mass is zero, and characterized by the
+order parameter $\langle{\bar q}q \rangle$, i.e., the chiral condensate \cite{Nambu:1961tp,Nambu:1961fr}.
+The confinement deconfinement phase transition is related to the center
+symmetry, which is only well defined in pure gauge sector when the current quark mass goes to infinity $m\rightarrow \infty$, and the order
+parameter is characterized by the Polyakov loop expectation value $\langle L \rangle $ \cite{Polyakov:1978vu}. In principle,  the chiral restoration and deconfinement phase transition can be separated. At zero density, lattice QCD results show that in the chiral limit the chiral and deconfinement phase transitions occur at the same critical temperature \cite{Kogut:1982rt}. However, in the case of physical quark mass, lattice simulations \cite{nature-PTD} shows that the critical temperatures for chiral restoration of light quarks $T_c^{\chi,(u,d)}=151 \text{MeV}$ and deconfinement phase transitions $T_c^d=176 \text{MeV}$ are different. It is also known that
+\cite{qcd-phase-diagram,deForcrand:2006pv,Kanaya:2010qd,Pisarski:1983ms}, in the chiral limit, the chiral phase transition is of second order phase transition for two-flavor case, and is of first order for three-flavor case due to the three-flavor mixing term or t'Hooft determinant term. When considering the finite quark mass, the chiral phase transition turns to be a crossover.
+
+QCD vacuum properties, QCD phase transitions and hot/dense matter around critical temperature/density are mainly dominated by
+non-perturbative dynamics, hence perturbative methods become invalid in this region. Non-perturbative methods such as lattice QCD,
+Dyson-Schwinger equations (DSEs), and functional renormalization group equations (FRGs) have been developed for several decades.
+Recently, the conjecture of the gravity/gauge duality \cite{Maldacena:1997re,Gubser:1998bc,Witten:1998qj} provides a new hopeful
+tool to tackle the strong coupling problem of the strong interaction. By breaking the conformal symmetry in different ways, many efforts
+have been made both in top-down and bottom-up approaches towards more realistic holographical description of QCD in non-perturbative
+region, such as hadron physics, QCD phase transitions, thermodynamical and transport properties of hot/dense QCD matter  (see \cite{Aharony:1999ti,Erdmenger:2007cm,CasalderreySolana:2011us,deTeramond:2012rt,Adams:2012th}
+ for reviews).
+
+For QCD phase transitions, most bottom-up holographic studies focus on confinement/deconfinement phase transition related to pure gauge sector.
+However, the chiral phase transition has been much less studied in the framework of bottom-up holography due to the complexity when adding
+flavor dynamics. In top-down approach, normally $D_p-D_q$ system is used in type II superstring theory, with the $D_p$ background
+brane describing the effects of pure QCD non-Abelian gauge theories and the $D_q$ probe brane describing the flavor dynamics, e.g.
+Sakai-Sugimoto model(D4-D8)\cite{SS-1,SS-2} and D3-D7\cite{D3-D7}  systems.
+ In bottom-up approach, normally a flavor action is added on the metric background
+as in the hard-wall  \cite{Erlich:2005qh} and soft-wall
+\cite{Karch:2006pv,TB:05,Colangelo:2011sr,Gherghetta-Kapusta-Kelley,Gherghetta-Kapusta-Kelley-2,YLWu,YLWu-1,Cui:2013xva,Li:2012ay,Li:2013oda}
+holographic QCD models. The chiral phase transition of QCD has never been correctly realized in the framework of AdS/CFT from both top-down
+and bottom-up approaches. In this work, we show how to correctly realize chiral symmetry breaking in the vacuum and restoration at finite temperature
+in the soft-wall holographic QCD models.
+
+In bottom-up approaches, hard-wall model \cite{Erlich:2005qh} and soft-wall model \cite{Karch:2006pv} are successful in describing hadron physics. Their extended models
+\cite{Gherghetta-Kapusta-Kelley,Gherghetta-Kapusta-Kelley-2,YLWu,YLWu-1,Cui:2013xva,Li:2012ay,Li:2013oda}
+can describe the hadron spectra and related quantities in very good accuracy. In these models, the chiral condensate is introduced to realize the spontaneous chiral symmetry breaking at zero temperature. However, there is no correct quark mass dependence for the chiral condensate, and cannot give the correct chiral symmetry breaking mechanism at zero temperature. Furthermore, the chiral phase transition at finite temperature cannot be correctly realized in the soft-wall holographic models. We find that both profiles of the scalar potential and the dilaton field are essential to generate correct quark mass dependence behavior of the chiral condensate.
+
+{\it The framework:} In this work, we only focus on chiral symmetry breaking and restoration, therefore, we only take the scalar part of the
+$SU(N_f)_L\times SU(N_f)_R$ 5D action, which takes the following form
+\begin{eqnarray}\label{action}
+ S=-\int d^5x
+ \sqrt{-g}e^{-\Phi}Tr(D_m X^+ D^m X+V_X(|X|)).
+% & & +\frac{1}{4g_5^2}(F_L^2+F_R^2)).
+\end{eqnarray}
+Here $\Phi$ is the dilaton field, and the 5D mass of the complex scalar field $X$ can be determined as $M_5^2=-3$ from the AdS/CFT dictionary $M_5^2=(\Delta-p)(\Delta+p-4)$\cite{Witten:1998qj} (here we have set the AdS radius $L=1$)  by taking $\Delta=3, p=0$.
+In this work, we do not consider the back-reaction of the dilaton field and scalar field to the background geometry, and $g$ is the AdS$_5$ metric
+background. In the string frame one has
+\begin{eqnarray}\label{metric-ansatz}
+d s^2=e^{2A_s(z)}(-f(z) d t^2+\frac{1}{f(z)}d z^2+dx_i dx^i),
+\end{eqnarray}
+with the background metric Eq.(\ref{metric-ansatz}) as the AdS-Schwarzchild black hole solution, in which
+\begin{eqnarray}
+A_s(z)&=&-\log(z),\label{adsas}\\
+f(z)&=&1-\frac{z^4}{z_h^4}.\label{adsf}
+\end{eqnarray}
+Here $z_h$ is the horizon of the black hole defined at $f(z_h)=0$ and related to the temperature $T$ of the system by the Hawking formula
+\begin{eqnarray}
+T=|\frac{f^{'}(z_h)}{4\pi}|=\frac{1}{\pi z_h}.
+\end{eqnarray}
+
+If the scalar field $X$ gets a non-vanishing vacuum expectation value $X_0$, then $SU(N_f)_L\times SU(N_f)_R$ is spontaneously broken.
+In this work, we would work in the case that $m_u=m_d$ for $N_f=2$ and $m_u=m_d=m_s$ for $N_f=3$, so we would expect that the symmetry would be broken to $SU(N_f)$ and $X_0=\frac{\chi(z)}{\sqrt{2N_f}}I_{N_f}$. Here $I_{N_f}$ is the $N_f\times N_f$ identity matrix and $\chi(z)$ is assumed to depend only on the
+ fifth coordinate $z$. Inserting the expectation value of $X$, we get the effective description in terms of $\chi$ of the following form
+\begin{eqnarray}\label{eff-action}
+S_{\chi}=-\int d^5x
+ \sqrt{-g}e^{-\Phi}(\frac{1}{2}g^{zz}\chi^{'2}+V(\chi)),
+\end{eqnarray}
+where we simply denote the scalar potential in terms of $\chi$ as
+\begin{equation}\label{profile-chi}
+V(\chi)\equiv Tr({V_X(|X|)})=-\frac{3}{2}\chi^2+v_3 \chi^3+v_4 \chi^4.
+\end{equation}
+ The leading term of $V(\chi)$ comes from the mass term and it is fixed to be $-\frac{3}{2}\chi^2$. The quartic term $v_4 \chi^4$ keeps $\chi\leftrightarrow-\chi$ symmetry, and the cubic term $v_3 \chi^3$ comes from the three-flavor mixing term and vanishes for the two-flavor case.
+The equation of motion for $\chi$ with respect to the action Eq.(\ref{eff-action}) can be derived as
+\begin{eqnarray}\label{eom-chi-1}
+\chi^{''}+(3A_s^{'}-\Phi^{'}+\frac{f^{'}}{f})\chi^{'}- \frac{e^{2A_s}}{f}\partial_\chi V(\chi)=0.
+\end{eqnarray}
+According to the AdS/CFT prescription, the UV asymptotic behavior of $\chi(z)$, which is assumed to be dual to the $\bar{q}q$ operator in QCD,
+and the leading UV expansion of this equation is still of the form $m_q \zeta z+\frac{\sigma}{\zeta} z^3$ with $m_q$ the current quark mass, $\sigma$ the chiral condensate and $\zeta=\frac{\sqrt{3}}{2\pi}$ \cite{Cherman:2008eh}.
+
+In order to solve the chiral condensate from Eq. (\ref{eom-chi-1}), one has to know the profile of the dilaton field $\Phi(z)$. The positive
+dilaton background as in the original soft-wall model cannot generate correct chiral symmetry breaking in the chiral limit.
+We find that a negative dilaton field as introduced in \cite{Zuo:2009dz,Gutsche:2011vb} can create the chiral symmetry breaking in the
+chiral limit and can realize chiral phase transition, for details see \cite{newlongpaper}. However, as pointed out in \cite{Karch:2006pv,KKSS-2},
+the negative dilaton background predicts an un-physical massless scalar meson state which is unacceptable. The results from spectra analysis
+and thermodynamical analysis seem in contradiction. To solve this issue, one has to note that the
+dominating energy scale of chiral symmetry breaking is around $1{\rm GeV}$ and that of confinement is around $200\sim300{\rm MeV}$\cite{shuryak-twoscales}.
+In the Regge behavior analysis, the confinement is the dominating effect while in chiral symmetry breaking mechanism new scale should be introduced. 
+Taking into account the latter, we expect that the negative dilaton dominates at small $z$ and at large $z$ positive dilaton would dominate.
+In between the two, we take the following simple interpolation
+\begin{eqnarray}\label{int-dilaton}
+\Phi(z)=-\mu_1z^2+(\mu_1+\mu_0)z^2\tanh(\mu_2z^2),
+\end{eqnarray}
+where $\mu_0=(0.43 {\rm GeV})^2$ taken from \cite{Li:2012ay,Li:2013oda} to produce
+the Regge spectra. At ultraviolet (UV) when $z\rightarrow 0$, $\Phi(z)\rightarrow -\mu_1z^2$, and at infrared (IR) limit
+when $z\rightarrow \infty$ the above interpolation goes to $\Phi(z)\rightarrow\mu_0z^2$, which is responsible for the linear confinement. In fact, QCD at IR region has actually no exact conformal symmetry. Therefore, we need to consider IR improved Soft-Wall AdS/QCD. In general, such an IR modified AdS/QCD model can include IR improved metric, quartic term, dilaton and conformal mass. In this paper, we shall focus on the simple IR improved dilaton that changes sign in an appropriate region as shown in Eq.(\ref{int-dilaton}). The other IR improved Soft-Wall AdS/QCD models will be investigated elsewhere.
+
+\begin{figure}
+%\begin{tabular}{ccccc}
+ \centerline{\includegraphics[width=7.5cm,height=6cm]{phis-z.eps}}
+ \centerline{(a)}
+\vfill
+\centerline{\includegraphics[width=7.5cm,height=6cm]{sigma-T-phis.eps}}
+ \centerline{(b)}
+\caption{(a) The profile of the dilaton field $\Phi(z)$ as a function of $z$ with different sets of parameters in unit of
+${\rm GeV}^2$. (b) The corresponding solution of the chiral condensate $\sigma$
+in two-flavor case as a function of the temperature $T$. }
+ \label{dilatonprofile-chiralcondensate}
+\end{figure}
+
+We firstly consider the two-flavor $N_f=2$ case, where $v_3=0$ in Eq.(\ref{profile-chi}), we choose $v_4=8$ in order
+to produce proper scalar mass as in \cite{YLWu}.
+We show the dilaton field profile $\Phi(z)$ as a function of $z$ in Fig.\ref{dilatonprofile-chiralcondensate}(a),
+and the corresponding solution of the chiral condensate $\sigma$ from Eq.(\ref{eom-chi-1}) as a function of the temperature in
+Fig.\ref{dilatonprofile-chiralcondensate}(b).
+It is noticed that if we choose the positive dilaton field profile (the red cross line) as in the original soft-wall model \cite{Karch:2006pv}, in the chiral limit, the chiral condensate $\sigma$ vanishes for all temperatures. This means there is no chiral symmetry breaking in the vacuum
+with a positive dilaton field profile. When we choose the dilaton profile which is negative at UV and positive at IR as shown in black solid, blue dashed, and cyan dotdashed lines in Fig.\ref{dilatonprofile-chiralcondensate}(a),  a nonzero chiral condensate develops in the vacuum
+as shown in Fig.\ref{dilatonprofile-chiralcondensate}(b). This means that the chiral symmetry is spontaneously broken in the vacuum.
+When the temperature increases, the chiral condensate decreases and drops to zero at the critical temperature $T_c$, which shows that the chiral phase transition is of second order in the chiral limit. With proper choice of $\mu_1=(0.83 {\rm GeV})^2\simeq0.69 {\rm GeV}^2$  and $\mu_2=(0.176 {\rm GeV})^2\simeq 0.03 {\rm GeV}^2$, one can have the critical temperature $T_c=151 {\rm MeV}$. When the current quark mass is nonzero, e.g. $m_0=7 {\rm MeV}$, the chiral symmetry is explicitly broken,
+we find that the phase transition turns to be a crossover as shown by the black dashed line in Fig.\ref{dilatonprofile-chiralcondensate}(b). With the same parameters choice of
+$\mu_1= 0.69 {\rm GeV}^2$ and $\mu_2= 0.03 {\rm GeV}^2$, the pseudo-critical temperature is
+around $T_c=150 {\rm MeV}$, which is in agreement with lattice results in \cite{nature-PTD}.
+
+\begin{figure}
+%\begin{tabular}{ccccc}
+ \centerline{\includegraphics[width=7.5cm,height=6cm]{sigma-T-v3.eps}}
+\caption{The chiral condensate $\sigma$ in three-flavor case as a function of temperature $T$ with the set of parameters:
+$v_3=-3, v_4=8$, $\mu_1= 0.69 {\rm GeV}^2$ and $\mu_2= 0.03 {\rm GeV}^2$ with $m_q=0$ and $m_q=55 {\rm MeV}$,
+respectively.}
+ \label{1st-crossover}
+\end{figure}
+
+In the case of three-flavor ($N_f=3$), for simplicity, we take $m_q=m_u=m_d=m_s$, we have $v_3\neq 0$ due to the three-flavor
+mixing term or the t'Hooft determinant term. We choose
+$v_3=-3$ and keep the set of parameters $v_4=8$, $\mu_1= 0.69 {\rm GeV}^2$ and $\mu_2= 0.03 {\rm GeV}^2$ as in the
+two-flavor case. In Fig.\ref{1st-crossover}, we show the chiral condensate as a function of temperature $T$ with $m_q=0$ and
+$m_q=55 {\rm MeV}$, respectively. It is found that in the chiral limit, the temperature dependent chiral condensate shows a
+typical 1st-order phase transition behavior (in red solid line and red dashed line), i.e., in certain temperature region,
+there exist three solutions for the chiral condensate. In order to determine the stable solution, one has to compare the free energy
+of the system, which is extracted from the on-shell action and takes the following form:
+\begin{eqnarray}\label{freeenergy}
+\mathcal{F}\equiv \frac{F}{V_3}
+ &=&\int dz \sqrt{-g}e^{-\Phi}(-\frac{1}{2}v_3\chi^3-v_4 \chi^4)\nonumber\\
+ & & -\frac{1}{2}(\chi e^{3A_s-\Phi}f\chi^{'})|_{\epsilon}.
+\end{eqnarray}
+When $m_q\neq0$, the last equation is divergent near $\epsilon=0$, and one has to add counter term to cancel the divergence, while when $m_q=0$, the UV divergence disappears and the last equation can be directly calculated after inserting the solutions of Eq.(\ref{eom-chi-1}). The minimum free energy
+determines the stable solution of the chiral condensate at fixed temperature, and the stable solution of the chiral condensate
+as the function of temperature is shown by red solid line in Fig.\ref{1st-crossover}. It is shown that at the critical temperature
+$T_c=173 {\rm MeV}$, the chiral condensate jumps to zero and the phase transition is of 1st-order. In the case of explicit
+chiral symmetry breaking with a finite current quark mass $m_q=55 {\rm MeV}$, the phase transition turns to be a cross-over.
+This scenario is in agreement with the "Colombia Plot" in \cite{qcd-phase-diagram}.
+We will consider the real three-flavor case with $m_u=m_d<m_s$ in the near future.
+
+{\it Summary:} In this work, we investigate the chiral symmetry breaking and chiral phase transition in the framework
+of soft-wall holographic QCD model.
+
+In the original soft-wall model with positive dilaton field, the chiral condensate is introduced to characterize the chiral symmetry breaking.
+However, it is worthy of mentioning that, in the chiral limit, the chiral condensate is zero at zero temperature, which means there is no
+spontaneous chiral symmetry breaking in the vacuum in this model. In order to realize the chiral symmetry breaking in the chiral limit, we
+find that one has to choose proper profiles for both the scalar potential and the dilaton field. Firstly, it is necessary to add the non-linear
+terms in the scalar potential, and we assume the simplest non-linear potential by adding the cubic term and the quartic term, where the
+cubic term only appears in three-flavor case due to the flavor mixing. Secondly, it is found that the positive dilaton background in the original
+soft-wall model does not give correct behavior of chiral condensate even when taking into account the non-linear potential for the scalar field,
+but a negative dilaton background can give prediction on chiral phase transition in good agreement with the Columbia sketch qualitatively.
+Since chiral symmetry breaking and confinement happen in different scales, it is reasonable to assume the negative dilaton and positive dilaton
+dominating in different regions. By interpolating both the negative dilaton at UV (determined by the chiral symmetry breaking) and the positive
+quadratic dilaton at IR (determined by the linear confinement) in a simple way, one can avoid the massless scalar meson state and get a result qualitatively
+similar to the negative dilaton background result.
+
+With nonlinear scalar potential and the dilaton field which is negative at UV and  positive at IR, for the first time,
+we can realize the spontaneous chiral symmetry breaking in the vacuum and its restoration at finite temperature
+in the holographic QCD framework.  In the chiral limit, a nonzero chiral condensate develops in the vacuum and
+decreases with the temperature, and the phase transition is of second order for two-flavor case and of 1st-order for
+three-flavor case. In the case of finite current quark mass, the phase transition turns to crossover in both two-flavor and
+three-flavor cases.
+
+The profile of the scalar potential determines the possible solution structure of the chiral condensate, which is the sufficient condition
+for the chiral condensate and determines the order of phase transition. The profile of the dilaton field is determined by gluodynamics,
+which is the necessary condition for the chiral condensate. Our results indicate that only with proper gluodynamics running from UV to IR,
+the chiral symmetry can be spontaneously broken in the vacuum, and chiral phase transition can happen at finite temperature.
+The correct description of chiral symmetry breaking and restoration makes the holographic QCD models more powerful in dealing
+with non-perturbative QCD phenomena, and the framework in this work can be regarded as a general set up in application of
+AdS/CFT to describe conventional Ginzburg-Landau-Wilson type phase transitions, e.g. in condensed matter and cosmology systems.
+
+In this work, we do not constrain the dilaton profile from the meson spectral simultaneously, and the back-reaction from the dilaton field
+to the metric background is not considered,  which will be left for future work. Furthermore, after introducing chemical potential through
+the gauge field part, we expect to get the correct $T-\mu$ phase diagram in the future.
+
+
+\vskip 0.5cm
+{\bf Acknowledgement}
+\vskip 0.2cm
+The authors thank Song He, Yi Yang for valuable discussions. K.C is supported by CAS-TWAS president fellowship.
+M.H. is supported by the NSFC under Grant Nos. 11175251 and 11275213, DFG and NSFC (CRC 110),
+CAS key project KJCX2-EW-N01, and Youth Innovation Promotion Association of CAS. This paper is funded in part by China Postdoctoral Science Foundation.
+
+\begin{thebibliography}{99}
+
+%\cite{Nambu:1961tp}
+\bibitem{Nambu:1961tp}
+  Y.~Nambu and G.~Jona-Lasinio,
+  %``Dynamical Model of Elementary Particles Based on an Analogy with Superconductivity. 1.,''
+  Phys.\ Rev.\  {\bf 122}, 345 (1961).
+  %%CITATION = PHRVA,122,345;%%
+  %4196 citations counted in INSPIRE as of 29 juil. 2015
+
+%\cite{Nambu:1961fr}
+\bibitem{Nambu:1961fr}
+  Y.~Nambu and G.~Jona-Lasinio,
+  %``Dynamical Model Of Elementary Particles Based On An Analogy With Superconductivity. Ii,''
+  Phys.\ Rev.\  {\bf 124} (1961) 246.
+  %%CITATION = PHRVA,124,246;%%
+  %2035 citations counted in INSPIRE as of 29 juil. 2015
+
+\bibitem{Polyakov:1978vu}
+  A.~M.~Polyakov,
+  %``Thermal Properties Of Gauge Fields And Quark Liberation,''
+  Phys.\ Lett.\  B {\bf 72}, 477 (1978).
+  %%CITATION = PHLTA,B72,477;%%
+
+  \bibitem{Kogut:1982rt}
+  J.~B.~Kogut, M.~Stone, H.~W.~Wyld, W.~R.~Gibbs, J.~Shigemitsu, S.~H.~Shenker and D.~K.~Sinclair,
+  %``Deconfinement And Chiral Symmetry Restoration At Finite Temperatures In
+  %SU(2) And SU(3) Gauge Theories,''
+  Phys.\ Rev.\ Lett.\  {\bf 50}, 393 (1983).
+  %%CITATION = PRLTA,50,393;%%
+
+%\cite{Aoki:2006we}
+\bibitem{nature-PTD}
+  Y.~Aoki, G.~Endrodi, Z.~Fodor, S.~D.~Katz and K.~K.~Szabo,
+  %``The Order of the quantum chromodynamics transition predicted by the standard model of particle physics,''
+  Nature {\bf 443} (2006) 675
+  [hep-lat/0611014].
+  %%CITATION = HEP-LAT/0611014;%%
+  %635 citations counted in INSPIRE as of 21 Jan 2015
+
+
+%\cite{Laermann:2003cv}
+\bibitem{qcd-phase-diagram}
+  E.~Laermann and O.~Philipsen,
+  %``The Status of lattice QCD at finite temperature,''
+  Ann.\ Rev.\ Nucl.\ Part.\ Sci.\  {\bf 53} (2003) 163
+  [hep-ph/0303042].
+  %%CITATION = HEP-PH/0303042;%%
+  %222 citations counted in INSPIRE as of 20 Jan 2015
+
+%\cite{deForcrand:2006pv}
+\bibitem{deForcrand:2006pv}
+  P.~de Forcrand and O.~Philipsen,
+ % ``The Chiral critical line of N(f) = 2+1 QCD at zero and non-zero baryon density,''
+  JHEP {\bf 0701} (2007) 077
+  [hep-lat/0607017].
+  %%CITATION = HEP-LAT/0607017;%%
+  %205 citations counted in INSPIRE as of 22 Jan 2015
+
+%\cite{Kanaya:2010qd}
+\bibitem{Kanaya:2010qd}
+  K.~Kanaya,
+ %``Lattice results on the phase structure and equation of state in QCD at finite temperature,''
+  AIP Conf.\ Proc.\  {\bf 1343} (2011) 57
+  [arXiv:1012.4235 [hep-ph]].
+  %%CITATION = ARXIV:1012.4235;%%
+  %13 citations counted in INSPIRE as of 22 Jan 2015
+
+%\cite{Pisarski:1983ms}
+\bibitem{Pisarski:1983ms}
+  R.~D.~Pisarski and F.~Wilczek,
+  %``Remarks on the Chiral Phase Transition in Chromodynamics,''
+  Phys.\ Rev.\ D {\bf 29} (1984) 338.
+  %%CITATION = PHRVA,D29,338;%%
+  %977 citations counted in INSPIRE as of 22 Jan 2015
+
+\bibitem{Maldacena:1997re}
+  J.~M.~Maldacena,
+  %``The large N limit of superconformal field theories and supergravity,''
+  Adv.\ Theor.\ Math.\ Phys.\  {\bf 2}, 231 (1998)
+  [Int.\ J.\ Theor.\ Phys.\  {\bf 38}, 1113 (1999)]  [arXiv:hep-th/9711200].
+  %%CITATION = IJTPB,38,1113;%%
+
+%\cite{Gubser:1998bc}
+\bibitem{Gubser:1998bc}
+  S.~S.~Gubser, I.~R.~Klebanov and A.~M.~Polyakov,
+  %``Gauge theory correlators from non-critical string theory,''
+  Phys.\ Lett.\  B {\bf 428}, 105 (1998)
+  [arXiv:hep-th/9802109].
+  %%CITATION = PHLTA,B428,105;%%
+
+%\cite{Witten:1998qj}
+\bibitem{Witten:1998qj}
+  E.~Witten,
+  %``Anti-de Sitter space and holography,''
+  Adv.\ Theor.\ Math.\ Phys.\  {\bf 2}, 253 (1998)
+  [arXiv:hep-th/9802150].
+  %%CITATION = 00203,2,253;%%
+
+
+
+%\cite{Aharony:1999ti}
+\bibitem{Aharony:1999ti}
+  O.~Aharony, S.~S.~Gubser, J.~M.~Maldacena, H.~Ooguri and Y.~Oz,
+  %``Large N field theories, string theory and gravity,''
+  Phys.\ Rept.\  {\bf 323}, 183 (2000)
+  [arXiv:hep-th/9905111].
+  %%CITATION = PRPLC,323,183;%%
+
+
+%\cite{Erdmenger:2007cm}
+\bibitem{Erdmenger:2007cm}
+  J.~Erdmenger, N.~Evans, I.~Kirsch and E.~Threlfall,
+  %``Mesons in Gauge/Gravity Duals - A Review,''
+  Eur.\ Phys.\ J.\ A {\bf 35} (2008) 81
+  [arXiv:0711.4467 [hep-th]].
+  %%CITATION = ARXIV:0711.4467;%%
+  %308 citations counted in INSPIRE as of 18 Jul 2015
+
+%\cite{deTeramond:2012rt}
+\bibitem{deTeramond:2012rt}
+  G.~F.~de Teramond and S.~J.~Brodsky,
+  %``Hadronic Form Factor Models and Spectroscopy Within the Gauge/Gravity Correspondence,''
+  arXiv:1203.4025 [hep-ph].
+  %%CITATION = ARXIV:1203.4025;%%
+  %60 citations counted in INSPIRE as of 18 Jul 2015
+
+%\cite{CasalderreySolana:2011us}
+\bibitem{CasalderreySolana:2011us}
+  J.~Casalderrey-Solana, H.~Liu, D.~Mateos, K.~Rajagopal and U.~A.~Wiedemann,
+  %``Gauge/String Duality, Hot QCD and Heavy Ion Collisions,''
+  arXiv:1101.0618 [hep-th].
+  %%CITATION = ARXIV:1101.0618;%%
+  %347 citations counted in INSPIRE as of 03 Nov 2015
+
+%%\cite{Kim:2012ey}
+%\bibitem{Kim:2012ey}
+%  Y.~Kim, I.~J.~Shin and T.~Tsukioka,
+%  %``Holographic QCD: Past, Present, and Future,''
+%  Prog.\ Part.\ Nucl.\ Phys.\  {\bf 68} (2013) 55
+%  [arXiv:1205.4852 [hep-ph]].
+%  %%CITATION = ARXIV:1205.4852;%%
+%  %30 citations counted in INSPIRE as of 18 juil. 2015
+
+
+%\cite{Adams:2012th}
+\bibitem{Adams:2012th}
+  A.~Adams, L.~D.~Carr, T.~Schäfer, P.~Steinberg and J.~E.~Thomas,
+  %``Strongly Correlated Quantum Fluids: Ultracold Quantum Gases, Quantum Chromodynamic Plasmas, and Holographic Duality,''
+  New J.\ Phys.\  {\bf 14} (2012) 115009
+  [arXiv:1205.5180 [hep-th]].
+  %%CITATION = ARXIV:1205.5180;%%
+  %53 citations counted in INSPIRE as of 18 Jul 2015
+
+\bibitem{SS-1}
+ T.~Sakai and S.~Sugimoto,
+%``Low energy hadron physics in holographic QCD,''
+Prog.\ Theor.\ Phys.\ \textbf{113}, 843 (2005)[arXiv:hep-th/0412141].
+%%CITATION = PTPKA,113,843;%%
+
+\bibitem{SS-2}
+ T.~Sakai and S.~Sugimoto,
+%``More on a holographic dual of QCD,''
+Prog.\ Theor.\ Phys.\ \textbf{114}, 1083 (2006)[arXiv:hep-th/0507073].
+%%CITATION = PTPKA,114,1083;%%
+
+\bibitem{D3-D7}
+J.~Babington, J.~Erdmenger, N.~J.~Evans, Z.~Guralnik and
+I.~Kirsch,
+%``Chiral symmetry breaking and pions in non-supersymmetric gauge/gravity
+%duals,''
+Phys.\ Rev.\ D \textbf{69}, 066007 (2004) [arXiv:hep-th/0306018].
+%%CITATION = PHRVA,D69,066007;%%
+
+
+
+ \bibitem{Erlich:2005qh}
+  J.~Erlich, E.~Katz, D.~T.~Son, M.~A.~Stephanov,
+  %``QCD and a holographic model of hadrons,''
+  Phys.\ Rev.\ Lett.\  {\bf 95}, 261602 (2005).
+  [hep-ph/0501128].
+
+ %\cite{Karch:2006pv}
+\bibitem{Karch:2006pv}
+  A.~Karch, E.~Katz, D.~T.~Son and M.~A.~Stephanov,
+ %``Linear confinement and AdS/QCD,''
+ Phys.\ Rev.\ D {\bf 74} (2006) 015005.
+%[hep-ph/0602229].  %%CITATION = HEP-PH/0602229;%%
+
+ \bibitem{TB:05} G.~F.~de Teramond and S.~J.~Brodsky,
+%``The hadronic spectrum of a holographic dual of QCD,''
+Phys.\ Rev.\ Lett.\ \textbf{94}, 201601 (2005). %  [arXiv:hep-th/0501022].
+%%CITATION = PRLTA,94,201601;%%
+
+
+%\cite{Colangelo:2011sr}
+\bibitem{Colangelo:2011sr}
+  P.~Colangelo, F.~Giannuzzi, S.~Nicotri and V.~Tangorra,
+ % ``Temperature and quark density effects on the chiral condensate: An AdS/QCD study,''
+  Eur.\ Phys.\ J.\ C {\bf 72} (2012) 2096  [arXiv:1112.4402 [hep-ph]].
+   %%CITATION = ARXIV:1112.4402;%%  %6 citations counted in INSPIRE as of 14 Jun 2013
+
+
+ \bibitem{Gherghetta-Kapusta-Kelley}
+T.~Gherghetta, J.~I.~Kapusta and T.~M.~Kelley,
+  %``Chiral symmetry breaking in the soft-wall AdS/QCD model,''
+Phys.\ Rev.\ D {\bf 79} (2009) 076003; % [arXiv:0902.1998 [hep-ph]].  %%CITATION = ARXIV:0902.1998;%%
+
+\bibitem{Gherghetta-Kapusta-Kelley-2}
+T.~M.~Kelley, S.~P.~Bartz and J.~I.~Kapusta,
+  %``Pseudoscalar Mass Spectrum in a Soft-Wall Model of AdS/QCD,''
+  Phys.\ Rev.\ D {\bf 83} (2011) 016002;
+%[arXiv:1009.3009 [hep-ph]].  %%CITATION = ARXIV:1009.3009;%%
+
+\bibitem{YLWu}
+  Y.~-Q.~Sui, Y.~-L.~Wu, Z.~-F.~Xie and Y.~-B.~Yang,
+ % ``Prediction for the Mass Spectra of Resonance Mesons in the Soft-Wall AdS/QCD with a Modified 5D Metric,''
+  Phys.\ Rev.\ D {\bf 81} (2010) 014024;  % [arXiv:0909.3887 [hep-ph]].  %%CITATION = ARXIV:0909.3887;%%
+
+\bibitem{YLWu-1}
+Y.~-Q.~Sui, Y.~-L.~Wu and Y.~-B.~Yang,
+ % ``Predictive AdS/QCD Model for Mass Spectra of Mesons with Three Flavors,''
+  Phys.\ Rev.\ D {\bf 83} (2011) 065030.  %[arXiv:1012.3518 [hep-ph]].  %%CITATION = ARXIV:1012.3518;%%
+
+\bibitem{Cui:2013xva}
+  L.~X.~Cui, Z.~Fang and Y.~L.~Wu,
+  %``Mass Spectra of Mesons and Bulk Holographic QCD with Linear Confinement and Chiral Symmetry Breaking,''
+  arXiv:1310.6487 [hep-ph].
+
+%\cite{Li:2012ay}
+\bibitem{Li:2012ay}
+  D.~Li, M.~Huang and Q.~S.~Yan,
+  %``A dynamical soft-wall holographic QCD model for chiral symmetry breaking and linear confinement,''
+  Eur.\ Phys.\ J.\ C {\bf 73} (2013) 2615
+  [arXiv:1206.2824 [hep-th]].
+  %%CITATION = ARXIV:1206.2824;%%
+  %13 citations counted in INSPIRE as of 28 juil. 2015
+
+
+%\cite{Li:2013oda}
+\bibitem{Li:2013oda}
+  D.~Li and M.~Huang,
+  %``Dynamical holographic QCD model for glueball and light meson spectra,''
+  JHEP {\bf 1311} (2013) 088
+  [arXiv:1303.6929 [hep-ph]].
+  %%CITATION = ARXIV:1303.6929;%%
+  %13 citations counted in INSPIRE as of 28 juil. 2015
+
+  %\cite{Cherman:2008eh}
+\bibitem{Cherman:2008eh}
+  A.~Cherman, T.~D.~Cohen and E.~S.~Werbos,
+  %``The Chiral condensate in holographic models of QCD,''
+  Phys.\ Rev.\ C {\bf 79} (2009) 045203  [arXiv:0804.1096 [hep-ph]].  %%CITATION = ARXIV:0804.1096;%%  %32 citations counted in INSPIRE as of 08 Apr 2013
+
+%{Zuo:2009dz,Gutsche:2011vb}
+\bibitem{Zuo:2009dz}
+  F.~Zuo,
+  %``Improved Soft-Wall model with a negative dilaton,''
+  Phys.\ Rev.\ D {\bf 82}, 086011 (2010)
+  [arXiv:0909.4240 [hep-ph]].
+  %%CITATION = ARXIV:0909.4240;%%
+  %40 citations counted in INSPIRE as of 04 Nov 2015
+
+\bibitem{Gutsche:2011vb}
+  T.~Gutsche, V.~E.~Lyubovitskij, I.~Schmidt and A.~Vega,
+  %``Dilaton in a soft-wall holographic approach to mesons and baryons,''
+  Phys.\ Rev.\ D {\bf 85}, 076003 (2012)
+  [arXiv:1108.0346 [hep-ph]].
+  %%CITATION = ARXIV:1108.0346;%%
+  %62 citations counted in INSPIRE as of 04 Nov 2015
+
+\bibitem{newlongpaper} Kaddour Chelabi, Zhen Fang, Mei Huang, Danning Li, Yue-Liang Wu, in preparation.
+
+
+\bibitem{KKSS-2}
+ A.~Karch, E.~Katz, D.~T.~Son and M.~A.~Stephanov,
+  %``On the sign of the dilaton in the soft wall models,''
+  JHEP {\bf 1104}, 066 (2011).
+  % arXiv:1012.4813 [hep-ph].
+  %%CITATION = ARXIV:1012.4813;%%
+
+
+
+%\bibitem{shuryakbook}
+%E.V.Shuryak, The QCD vacuum, Hadrons and Super Condense Matter.(World Scientific, Second Edition, 2004)
+
+%\cite{Shuryak:1981fz}
+\bibitem{shuryak-twoscales}
+   E.~V.~Shuryak and T.~Schäfer,
+  %``The QCD vacuum as an instanton liquid,''
+  Ann.\ Rev.\ Nucl.\ Part.\ Sci.\  {\bf 47} (1997) 359.
+
+
+
+
+\end{thebibliography}
+
+\end{document}
