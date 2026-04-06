@@ -1,59 +1,62 @@
 # HQCDBVP.jl
 
-`HQCDBVP.jl` is a lightweight Julia toolkit for nonlinear two-point boundary value problems that appear in holographic QCD and related coupled radial ODE systems.
+`HQCDBVP.jl` 是一个面向全息 QCD 以及相关径向耦合常微分方程组的轻量级 Julia 边值问题工具集。
 
-This repository is currently released as **v0.1**.
+当前仓库版本为 **v0.1**。
 
-## Scope of v0.1
+## v0.1 的目标范围
 
-The current version focuses on a small and transparent workflow:
+这个版本刻意保持小而透明，主要覆盖以下工作流：
 
-- Chebyshev-Lobatto collocation on a finite interval
-- First- and second-order spectral differentiation matrices
-- Multi-field coupled ODE systems
-- Explicit UV / IR boundary residuals supplied by the user
-- Nonlinear algebraic solves via `NonlinearSolve.jl`
-- Simple natural continuation by parameter scanning
-- Plotting and CSV export helpers for solutions
+- 有限区间上的 Chebyshev-Lobatto 配置法
+- 一阶、二阶谱微分矩阵
+- 多场耦合 ODE 系统
+- 用户显式给出的 UV / IR 边界残差
+- 基于 `NonlinearSolve.jl` 的非线性代数方程组求解
+- 基于参数扫描的简单 natural continuation
+- 解结果的绘图与 CSV 导出
 
-The code is intentionally organized as plain Julia function files rather than a registered Julia package layout. The main entry point is:
+目前代码采用“普通函数文件 + `include`”的组织方式，而不是注册包形式。主入口为：
 
 ```julia
 include("../src/hqcdbvp.jl")
 ```
 
-## Design choices
+## 设计取舍
 
-This version deliberately does **not** attempt to handle the following automatically:
+`v0.1` 暂时 **不自动处理** 以下内容：
 
-- regular singular endpoints
-- UV asymptotic expansion generation
-- horizon regularity generation
+- 正则奇点或更一般的奇异端点
+- UV 渐近展开自动生成
+- horizon 正则条件自动生成
 - pseudo-arclength continuation
-- multi-domain spectral elements
-- adaptive order refinement
-- PDE support
+- 多区间谱元
+- 自适应阶数
+- PDE 支持
 
-The intended assumption is that the user has already rewritten the problem into a numerically regular ODE system with explicit boundary residuals.
+因此默认假设是：你已经将原问题改写成数值上正则的 ODE 系统，并且可以直接写出左右边界的残差形式。
 
-## File layout
+## 文件结构
 
-- `src/hqcdbvp.jl`: top-level include file
-- `src/grid.jl`: nodes, weights, and differentiation matrices
-- `src/problem.jl`: problem construction, parameter updates, initial guesses, boundary helpers
-- `src/solver.jl`: residual assembly, nonlinear solve, natural continuation
-- `src/plotting.jl`: plotting and CSV export
-- `scripts/`: runnable examples and smoke tests
+- `src/hqcdbvp.jl`：总入口，统一 `using` 和 `include`
+- `src/grid.jl`：节点、权重与谱微分矩阵
+- `src/problem.jl`：问题构造、参数更新、初值与边界辅助函数
+- `src/solver.jl`：残差组装、非线性求解、natural continuation
+- `src/plotting.jl`：绘图与 CSV 导出
+- `scripts/`：可直接运行的示例与测试脚本
 
-## Core API
+## 核心接口
 
-### Grid
+### 1. 配置网格
 
 ```julia
 grid = make_grid(a, b, n)
 ```
 
-### Problem
+这会在区间 `[a, b]` 上生成 Chebyshev-Lobatto 配置网格。
+节点优先借助 `FastGaussQuadrature.jl` 生成，而谱微分矩阵按显式公式构造。
+
+### 2. 构造问题
 
 ```julia
 problem = make_bvp_problem(f!, bc_left!, bc_right!, grid;
@@ -63,7 +66,7 @@ problem = make_bvp_problem(f!, bc_left!, bc_right!, grid;
 )
 ```
 
-Residual function signatures:
+残差函数签名为：
 
 ```julia
 f!(res, u, du, d2u, x, p)
@@ -71,32 +74,74 @@ bc_left!(res, u, du, d2u, x, p)
 bc_right!(res, u, du, d2u, x, p)
 ```
 
-### Initial guesses
+其中：
+
+- `u`、`du`、`d2u` 是单个配置点上的长度为 `nfields` 的向量视图
+- `res` 也是长度为 `nfields` 的向量，需要原地写入
+- `p` 是模型参数包，推荐用 `NamedTuple`
+
+### 3. 模型参数
+
+```julia
+p = make_model_params(lambda=1.0, zh=1.2)
+p2 = update_model_params(p; lambda=1.5)
+```
+
+### 4. 初值
+
+单场常数初值：
 
 ```julia
 guess = constant_guess(problem; value=0.0)
 ```
 
-or
+多场堆叠初值：
 
 ```julia
 guess = stacked_guess(phi0, chi0, g0)
 ```
 
-### Solve
+### 5. 求解
 
 ```julia
 result = solve_bvp(problem, guess; abstol=1e-12, reltol=1e-12, maxiters=200)
 ```
 
-### Boundary helpers
+返回值是一个 `NamedTuple`，主要字段包括：
+
+- `converged`
+- `retcode`
+- `u`
+- `du`
+- `d2u`
+- `residual`
+- `residual_norm`
+- `params`
+- `field_names`
+
+### 6. 边界条件辅助函数
+
+Dirichlet：
 
 ```julia
 uv_bc! = make_dirichlet_bc([0.0, 1.0])
+```
+
+Robin：
+
+```julia
 ir_bc! = make_robin_bc([0.0, 0.0], [1.0, 1.0], [1.0, -1.0])
 ```
 
-### Natural continuation
+它对应的形式是：
+
+```text
+alpha .* u + beta .* du - gamma = 0
+```
+
+这对 HQCD 中 UV / IR 两端采用不同类型边界条件时比较方便。
+
+### 7. Natural continuation
 
 ```julia
 scan = continuation_solve(problem, :lambda, 0.0:0.2:2.0, guess;
@@ -106,7 +151,9 @@ scan = continuation_solve(problem, :lambda, 0.0:0.2:2.0, guess;
 )
 ```
 
-### Plotting and export
+这会沿给定参数序列逐点求解，并自动把上一步解作为下一步初值。
+
+### 8. 绘图与导出
 
 ```julia
 plt = plot_solution(result; field_names=[:phi, :chi], quantity=:u)
@@ -114,7 +161,9 @@ save_solution_plot(result, "solution.png"; field_names=[:phi, :chi])
 save_solution_csv(result, "solution.csv"; field_names=[:phi, :chi])
 ```
 
-## Example scripts
+## 示例脚本
+
+可以直接运行：
 
 ```powershell
 julia scripts/smoke_test.jl
@@ -125,9 +174,18 @@ julia scripts/continuation_demo.jl
 julia scripts/plotting_demo.jl
 ```
 
-## Dependencies
+这些脚本分别覆盖：
 
-The scripts expect these packages to be available in the active Julia environment:
+- 单场 smoke test
+- 双场耦合示例
+- UV / IR 混合边界示例
+- 三场 HQCD 风格模板
+- simple continuation 示例
+- 绘图与 CSV 导出演示
+
+## 依赖
+
+脚本默认假设当前 Julia 环境已经安装以下包：
 
 - `FastGaussQuadrature`
 - `NonlinearSolve`
@@ -136,6 +194,6 @@ The scripts expect these packages to be available in the active Julia environmen
 - `DataFrames`
 - `CSV`
 
-## Version
+## 版本
 
-Current release target: **v0.1**.
+当前发布目标版本：**v0.1**。
