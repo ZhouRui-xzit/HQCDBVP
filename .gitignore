@@ -1,0 +1,19 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Julia local state
+.julia/
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
+
+# Generated outputs
+scripts/*.png
+scripts/*.csv
+*.log
+
+# Local ssh helper file
+.ssh_known_hosts
