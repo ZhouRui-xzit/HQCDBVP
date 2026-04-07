@@ -98,6 +98,27 @@ function find_candidate_brackets(case, temperature; fit_points=8, scan_values=co
     return candidates
 end
 
+function select_bracket_by_sigma(candidates; min_chi_h=1e-3)
+    filtered = filter(c -> max(abs(c[1]), abs(c[2])) > min_chi_h, candidates)
+    isempty(filtered) && return nothing
+    scores = map(c -> max(abs(c[5].sigma_fit), abs(c[6].sigma_fit)), filtered)
+    return filtered[argmax(scores)]
+end
+
+function select_bracket_by_continuity(candidates, prev_chi_h; min_chi_h=1e-3)
+    filtered = filter(c -> max(abs(c[1]), abs(c[2])) > min_chi_h, candidates)
+    isempty(filtered) && return nothing
+    scores = map(c -> min(abs(c[1] - prev_chi_h), abs(c[2] - prev_chi_h)), filtered)
+    return filtered[argmin(scores)]
+end
+
+function select_zero_bracket(candidates; max_chi_h=1e-3)
+    filtered = filter(c -> max(abs(c[1]), abs(c[2])) <= max_chi_h, candidates)
+    isempty(filtered) && return nothing
+    scores = map(c -> max(abs(c[1]), abs(c[2])), filtered)
+    return filtered[argmin(scores)]
+end
+
 function solve_shooting_at_temperature(case, temperature; fit_points=8, initial_bracket=nothing, maxiters=40)
     left, right, fleft, fright, left_res, right_res = if initial_bracket === nothing
         bracket_root(case, temperature; fit_points=fit_points)
@@ -136,49 +157,93 @@ function solve_shooting_at_temperature(case, temperature; fit_points=8, initial_
     return best, (left, right)
 end
 
-function run_shooting_branch(; mq_mev=7.0, ntemps=41, fit_points=8)
+function run_shooting_case(;
+    case,
+    ntemps=57,
+    fit_points=8,
+    Tmin_mev=20.0,
+    Tmax_mev=300.0,
+    scan_max=0.35,
+    scan_points=701,
+    prefer_nontrivial::Bool=true,
+    continue_with_zero_branch::Bool=false,
+)
+    temperatures = collect(range(Tmin_mev * GEV_PER_MEV, Tmax_mev * GEV_PER_MEV; length=ntemps))
+    results = ShootingResult[]
+    prev_chi_h = nothing
+    following_zero_branch = false
+
+    for T in temperatures
+        candidates = find_candidate_brackets(
+            case,
+            T;
+            fit_points=fit_points,
+            scan_values=collect(range(0.0, scan_max; length=scan_points)),
+        )
+
+        bracket = if prev_chi_h === nothing
+            prefer_nontrivial ? select_bracket_by_sigma(candidates) : select_zero_bracket(candidates)
+        elseif following_zero_branch
+            select_zero_bracket(candidates)
+        else
+            select_bracket_by_continuity(candidates, prev_chi_h)
+        end
+
+        if bracket === nothing && continue_with_zero_branch
+            bracket = select_zero_bracket(candidates)
+            following_zero_branch = bracket !== nothing
+        end
+        bracket === nothing && error("no admissible shooting bracket at T=$(T) for $(case.name)")
+
+        result = solve_shooting_at_temperature(
+            case,
+            T;
+            fit_points=fit_points,
+            initial_bracket=(bracket[1], bracket[2]),
+            maxiters=80,
+        )[1]
+        push!(results, result)
+        prev_chi_h = result.chi_h
+    end
+
+    return results
+end
+
+function run_shooting_branch(; mq_mev=7.0, kwargs...)
     case = make_fig1_case(
         "interpolating dilaton, mq = $(mq_mev) MeV",
         dilaton_mode=:interpolating,
         mq_mev=mq_mev,
     )
-    temperatures = collect(range(0.220, 0.020; length=ntemps))
-    results = Vector{ShootingResult}(undef, length(temperatures))
-    prev_chi_h = nothing
-
-    for (i, T) in enumerate(temperatures)
-        if prev_chi_h === nothing
-            result, _ = solve_shooting_at_temperature(case, T; fit_points=fit_points, initial_bracket=(0.004, 0.006))
-        else
-            candidates = find_candidate_brackets(case, T; fit_points=fit_points)
-            isempty(candidates) && error("no positive-root candidates at T=$(T)")
-            scores = map(c -> min(abs(c[1] - prev_chi_h), abs(c[2] - prev_chi_h)), candidates)
-            bracket = candidates[argmin(scores)]
-            result, _ = solve_shooting_at_temperature(case, T; fit_points=fit_points, initial_bracket=(bracket[1], bracket[2]))
-        end
-        results[i] = result
-        prev_chi_h = result.chi_h
-    end
-
-    return reverse(results)
+    return run_shooting_case(; case=case, kwargs...)
 end
 
-function save_shooting_outputs(results; stem="shooting_mq7")
-    outdir = @__DIR__
+result_temperature(r) = r isa ShootingResult ? r.temperature : r.params.temperature
+result_sigma(r) = r isa ShootingResult ? r.sigma_fit : sigma_from_result(r)
+result_mq(r) = r isa ShootingResult ? r.mq_fit : mq_from_result(r)
+result_chi_h(r) = r isa ShootingResult ? r.chi_h : NaN
+
+function save_shooting_outputs(results; stem="shooting_mq7", title="Shooting sigma(T)", label="shooting", outdir=joinpath(@__DIR__, "data"))
+    mkpath(outdir)
     csv_path = joinpath(outdir, stem * ".csv")
     svg_path = joinpath(outdir, stem * ".svg")
 
     open(csv_path, "w") do io
         println(io, "T_MeV,sigma_GeV3,mq_fit_GeV,chi_h")
         for r in results
-            println(io, string(r.temperature / GEV_PER_MEV, ",", r.sigma_fit, ",", r.mq_fit, ",", r.chi_h))
+            println(io, string(
+                result_temperature(r) / GEV_PER_MEV, ",",
+                result_sigma(r), ",",
+                result_mq(r), ",",
+                result_chi_h(r),
+            ))
         end
     end
 
-    T_mev = [r.temperature / GEV_PER_MEV for r in results]
-    sigmas = [r.sigma_fit for r in results]
+    T_mev = [result_temperature(r) / GEV_PER_MEV for r in results]
+    sigmas = [result_sigma(r) for r in results]
     plt = plot(T_mev, sigmas; lw=2.5, xlabel="T [MeV]", ylabel="sigma [GeV^3]",
-        title="Shooting sigma(T), mq = 7 MeV", label="shooting")
+        title=title, label=label)
     savefig(plt, svg_path)
     return csv_path, svg_path
 end

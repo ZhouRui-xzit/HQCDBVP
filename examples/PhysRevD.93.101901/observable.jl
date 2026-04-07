@@ -29,6 +29,12 @@ function leading_uv_chi(z, result)
     return result.params.mq * FIG1_ZETA * z
 end
 
+function sigma_from_y0(result)
+    β_tilde = result.u[1, 1]
+    correction = uv_log_coefficient(result.params) * log(result.params.zh)
+    return (β_tilde - correction) * FIG1_ZETA / result.params.zh^3
+end
+
 function fit_sigma_from_chi_uv(result; nfit::Integer=result.params.uv_fit_points)
     z = z_profile(result)
     chi = chi_profile(result)
@@ -68,7 +74,7 @@ function fit_beta_from_uv(result; nfit::Integer=result.params.uv_fit_points)
 end
 
 function sigma_from_result(result)
-    return fit_sigma_from_chi_uv_rich(result)
+    return sigma_from_y0(result)
 end
 
 mq_from_result(result) = result.params.mq

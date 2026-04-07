@@ -34,16 +34,38 @@ function alpha_source(p)
     return p.mq * FIG1_ZETA * p.zh
 end
 
+function uv_log_coefficient(p)
+    α = alpha_source(p)
+    return α * (2 * α^2 * p.v4 - p.mu1 * p.zh^2)
+end
+
+function uv_log_chi_term(u, p)
+    u == 0 && return 0.0
+    return uv_log_coefficient(p) * u^3 * log(u)
+end
+
 function chi_from_y(y, u, p)
-    return alpha_source(p) * u + u^3 * y
+    return alpha_source(p) * u + u^3 * y + uv_log_chi_term(u, p)
 end
 
 function chi_u_from_y(y, y_u, u, p)
-    return alpha_source(p) + 3 * u^2 * y + u^3 * y_u
+    if u == 0
+        return alpha_source(p)
+    end
+    blog = uv_log_coefficient(p) * u^2 * (3 * log(u) + 1)
+    return alpha_source(p) + 3 * u^2 * y + u^3 * y_u + blog
 end
 
 function chi_uu_from_y(y, y_u, y_uu, u)
     return 6 * u * y + 6 * u^2 * y_u + u^3 * y_uu
+end
+
+function chi_uu_from_y(y, y_u, y_uu, u, p)
+    if u == 0
+        return 0.0
+    end
+    blog = uv_log_coefficient(p) * u * (6 * log(u) + 5)
+    return 6 * u * y + 6 * u^2 * y_u + u^3 * y_uu + blog
 end
 
 function fig1_bulk_equation!(res, uvec, duvec, d2uvec, u, p)
@@ -53,7 +75,7 @@ function fig1_bulk_equation!(res, uvec, duvec, d2uvec, u, p)
 
     chi = chi_from_y(y, u, p)
     chi_u = chi_u_from_y(y, y_u, u, p)
-    chi_uu = chi_uu_from_y(y, y_u, y_uu, u)
+    chi_uu = chi_uu_from_y(y, y_u, y_uu, u, p)
 
     z = p.zh * u
     f = blackening_u(u)
