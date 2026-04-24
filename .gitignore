@@ -11,8 +11,9 @@ Thumbs.db
 *.jl.mem
 
 # Generated outputs
-scripts/*.png
-scripts/*.csv
+*.png
+*.csv
+*.csv
 *.log
 
 # Local ssh helper file
