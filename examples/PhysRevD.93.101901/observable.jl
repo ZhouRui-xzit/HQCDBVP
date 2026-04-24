@@ -91,6 +91,48 @@ function ir_residual_from_result(result)
     return 4 * chi_u + dVdchi(chi, result.params)
 end
 
+function trapezoid_integral(x, y)
+    length(x) == length(y) || throw(DimensionMismatch("x and y must have the same length"))
+    total = zero(promote_type(eltype(x), eltype(y)))
+    for i in 1:length(x)-1
+        total += (x[i+1] - x[i]) * (y[i+1] + y[i]) / 2
+    end
+    return total
+end
+
+function free_energy_bulk_integrand(z, chi, p)
+    z == 0 && return 0.0
+    sqrt_minus_g = z^(-5)
+    return sqrt_minus_g * exp(-dilaton(z, p)) * (-0.5 * p.v3 * chi^3 - p.v4 * chi^4)
+end
+
+function free_energy_uv_boundary(result; uv_index::Integer=2)
+    p = result.params
+    u = result.grid.x[uv_index]
+    z = p.zh * u
+    chi = chi_from_y(result.u[1, uv_index], u, p)
+    chi_u = chi_u_from_y(result.u[1, uv_index], result.du[1, uv_index], u, p)
+    chi_z = chi_u / p.zh
+    as_factor = z^(-3)
+    return -0.5 * chi * as_factor * exp(-dilaton(z, p)) * blackening_u(u) * chi_z
+end
+
+function free_energy(result; require_chiral_limit::Bool=true)
+    if require_chiral_limit && abs(result.params.mq) > 100 * eps(Float64)
+        throw(ArgumentError("Eq. (10) is UV divergent for mq != 0 unless counterterms are added"))
+    end
+
+    z = z_profile(result)
+    chi = chi_profile(result)
+    order = sortperm(z)
+    zsorted = z[order]
+    chisorted = chi[order]
+    integrand = free_energy_bulk_integrand.(zsorted, chisorted, Ref(result.params))
+    bulk = trapezoid_integral(zsorted, integrand)
+    boundary = free_energy_uv_boundary(result)
+    return bulk + boundary
+end
+
 function make_fig1_initial_guess(problem, case)
     return constant_guess(problem; value=case.y_guess)
 end

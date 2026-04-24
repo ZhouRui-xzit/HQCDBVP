@@ -34,9 +34,14 @@ function alpha_source(p)
     return p.mq * FIG1_ZETA * p.zh
 end
 
+function uv_quadratic_coefficient(p)
+    α = alpha_source(p)
+    return -3 * p.v3 * α^2
+end
+
 function uv_log_coefficient(p)
     α = alpha_source(p)
-    return α * (2 * α^2 * p.v4 - p.mu1 * p.zh^2)
+    return α * ((2 * p.v4 - 9 * p.v3^2) * α^2 - p.mu1 * p.zh^2)
 end
 
 function uv_log_chi_term(u, p)
@@ -45,7 +50,7 @@ function uv_log_chi_term(u, p)
 end
 
 function chi_from_y(y, u, p)
-    return alpha_source(p) * u + u^3 * y + uv_log_chi_term(u, p)
+    return alpha_source(p) * u + uv_quadratic_coefficient(p) * u^2 + u^3 * y + uv_log_chi_term(u, p)
 end
 
 function chi_u_from_y(y, y_u, u, p)
@@ -53,7 +58,7 @@ function chi_u_from_y(y, y_u, u, p)
         return alpha_source(p)
     end
     blog = uv_log_coefficient(p) * u^2 * (3 * log(u) + 1)
-    return alpha_source(p) + 3 * u^2 * y + u^3 * y_u + blog
+    return alpha_source(p) + 2 * uv_quadratic_coefficient(p) * u + 3 * u^2 * y + u^3 * y_u + blog
 end
 
 function chi_uu_from_y(y, y_u, y_uu, u)
@@ -62,10 +67,10 @@ end
 
 function chi_uu_from_y(y, y_u, y_uu, u, p)
     if u == 0
-        return 0.0
+        return 2 * uv_quadratic_coefficient(p)
     end
     blog = uv_log_coefficient(p) * u * (6 * log(u) + 5)
-    return 6 * u * y + 6 * u^2 * y_u + u^3 * y_uu + blog
+    return 2 * uv_quadratic_coefficient(p) + 6 * u * y + 6 * u^2 * y_u + u^3 * y_uu + blog
 end
 
 function fig1_bulk_equation!(res, uvec, duvec, d2uvec, u, p)
