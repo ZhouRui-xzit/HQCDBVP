@@ -1,5 +1,15 @@
+module Solvers
+
 using LinearAlgebra
 using NonlinearSolve
+
+using ..Problems: flatten_state,
+    remake_problem,
+    reshape_state
+
+export residual_vector,
+    solve_bvp,
+    continuation_solve
 
 """
     residual_vector(problem, u)
@@ -124,4 +134,6 @@ function continuation_solve(problem, param_name::Symbol, param_values, guess; up
         param_values = values,
         branches = results,
     )
+end
+
 end

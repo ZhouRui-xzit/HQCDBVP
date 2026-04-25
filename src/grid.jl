@@ -1,4 +1,10 @@
+module Grid
+
 using FastGaussQuadrature
+
+export make_chebyshev_lobatto_nodes,
+    make_chebyshev_diff_matrices,
+    make_grid
 
 """
     make_chebyshev_lobatto_nodes(n)
@@ -80,4 +86,6 @@ function make_grid(a::Real, b::Real, n::Integer)
         D1 = D1,
         D2 = D2,
     )
+end
+
 end

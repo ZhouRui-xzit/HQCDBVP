@@ -86,6 +86,11 @@ const SOURCE_INCLUDE_START = time()
 include(joinpath(REPO_ROOT, "src", "grid.jl"))
 include(joinpath(REPO_ROOT, "src", "problem.jl"))
 include(joinpath(REPO_ROOT, "src", "solver.jl"))
+using .Grid: make_grid
+using .Problems: flatten_state,
+    make_bvp_problem
+using .Solvers: residual_vector,
+    solve_bvp
 const SOURCE_INCLUDE_SECONDS = time() - SOURCE_INCLUDE_START
 
 function bulk_equation!(res, u, du, d2u, x, p)
@@ -254,4 +259,3 @@ function main()
     end
 end
 
-main()

@@ -1,5 +1,8 @@
-include("ploting.jl")
 using DelimitedFiles
+
+import Plots
+
+include("ploting.jl")
 
 function make_positive_case()
     positive_case = make_fig1_case(
@@ -301,7 +304,7 @@ function save_spectral_branch_outputs(branch; stem="spectral_mq0_T20_300", outdi
         end
     end
 
-    plt = plot(
+    plt = Plots.plot(
         Ts_mev,
         branch.sigmas;
         lw=2.5,
@@ -310,7 +313,7 @@ function save_spectral_branch_outputs(branch; stem="spectral_mq0_T20_300", outdi
         title="Spectral sigma(T)",
         label=branch.case.name,
     )
-    savefig(plt, svg_path)
+    Plots.savefig(plt, svg_path)
     return csv_path, svg_path, plt
 end
 
@@ -332,7 +335,7 @@ function save_scheme_branches_outputs(branches; stem="spectral_sigma_T_mq0_ABC_T
         end
     end
 
-    plt = plot(
+    plt = Plots.plot(
         xlabel="T [MeV]",
         ylabel="sigma [GeV^3]",
         title="Spectral sigma(T)",
@@ -340,9 +343,9 @@ function save_scheme_branches_outputs(branches; stem="spectral_sigma_T_mq0_ABC_T
         lw=2.5,
     )
     for branch in branches
-        plot!(plt, Ts_mev, branch.sigmas; label=branch.case.name)
+        Plots.plot!(plt, Ts_mev, branch.sigmas; label=branch.case.name)
     end
-    savefig(plt, svg_path)
+    Plots.savefig(plt, svg_path)
     return csv_path, svg_path, plt
 end
 
@@ -382,7 +385,7 @@ function save_branch_outputs(branch; stem="spectral_fig2_mq55_T20_300", outdir=j
         end
     end
 
-    plt = plot(
+    plt = Plots.plot(
         Ts_mev,
         branch.sigmas;
         lw=2.5,
@@ -391,7 +394,7 @@ function save_branch_outputs(branch; stem="spectral_fig2_mq55_T20_300", outdir=j
         title="Fig. 2 spectral sigma(T)",
         label=branch.case.name,
     )
-    savefig(plt, svg_path)
+    Plots.savefig(plt, svg_path)
     return csv_path, svg_path, plt
 end
 
@@ -410,17 +413,17 @@ function save_fig2_mq0_multibranch_outputs(result; stem="spectral_fig2_mq0_T20_3
         end
     end
 
-    plt = plot(
+    plt = Plots.plot(
         xlabel="T [MeV]",
         ylabel="sigma [GeV^3]",
         title="Fig. 2 mq = 0 spectral sigma(T)",
         legend=:topright,
     )
     for (i, branch) in enumerate(result.branches)
-        plot!(plt, Ts_mev, branch.sigmas; label="candidate $(i)", lw=1.2, linestyle=:dash, alpha=0.55)
+        Plots.plot!(plt, Ts_mev, branch.sigmas; label="candidate $(i)", lw=1.2, linestyle=:dash, alpha=0.55)
     end
-    plot!(plt, Ts_mev, result.stable_sigmas; label="minimum free energy", lw=3.0, color=:red)
-    savefig(plt, svg_path)
+    Plots.plot!(plt, Ts_mev, result.stable_sigmas; label="minimum free energy", lw=3.0, color=:red)
+    Plots.savefig(plt, svg_path)
     return csv_path, svg_path, plt
 end
 
@@ -432,7 +435,7 @@ function main(; mode::Symbol=:mq0_spectral, save_plot::Bool=true, ntemps::Intege
         mq0_case, mq0_branch = solve_mq0_spectral_branch(ntemps=ntemps, Tmin_mev=Tmin_mev, Tmax_mev=Tmax_mev)
         fig = make_fig1_plot([positive_case, mq0_case], [mq0_branch])
         fig_path = joinpath(data_dir, "fig1_mq0_spectral_T20_300.png")
-        save_plot && savefig(fig, fig_path)
+        save_plot && Plots.savefig(fig, fig_path)
         csv_path, svg_path, _ = save_spectral_branch_outputs(mq0_branch; outdir=data_dir)
 
         println("mq=0 spectral sigma(T=20 MeV) = ", mq0_branch.sigmas[1], " GeV^3")

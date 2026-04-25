@@ -1,4 +1,3 @@
-include("../../src/hqcdbvp.jl")
 include("constant.jl")
 
 function dilaton(z, p)

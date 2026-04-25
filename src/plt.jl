@@ -1,3 +1,15 @@
+module plt
+
+using CSV
+using DataFrames
+using Plots
+
+export result_field_names,
+    make_solution_dataframe,
+    save_solution_csv,
+    plot_solution,
+    save_solution_plot
+
 """
     result_field_names(result; field_names=nothing)
 
@@ -88,4 +100,6 @@ function save_solution_plot(result, path::AbstractString; kwargs...)
     plt = plot_solution(result; kwargs...)
     savefig(plt, path)
     return path
+end
+
 end

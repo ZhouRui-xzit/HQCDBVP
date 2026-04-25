@@ -1,3 +1,16 @@
+module Problems
+
+export make_model_params,
+    update_model_params,
+    remake_problem,
+    make_bvp_problem,
+    constant_guess,
+    stacked_guess,
+    make_dirichlet_bc,
+    make_robin_bc,
+    flatten_state,
+    reshape_state
+
 """
     make_model_params(; kwargs...)
 
@@ -130,4 +143,6 @@ function reshape_state(problem, u::AbstractVector)
     expected = problem.nfields * npoints
     length(u) == expected || throw(DimensionMismatch("状态向量长度应为 $(expected)。"))
     return reshape(u, problem.nfields, npoints)
+end
+
 end
